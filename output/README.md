@@ -2,6 +2,8 @@
 
 # lnav
 
+> Fork of [dariogriffo/lnav-debian](https://github.com/dariogriffo/lnav-debian) (MIT); the original packaging is by Dario Griffo. Served at [deb.gaofn.xyz](https://deb.gaofn.xyz) for Debian 12 (bookworm) and 13 (trixie).
+
 **The Logfile Navigator.**
 
 ![GitHub Release](https://img.shields.io/github/v/release/tstack/lnav?display_name=tag&color=%23a6a)

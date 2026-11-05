@@ -1,10 +1,10 @@
 Source: lnav
 Section: utils
 Priority: optional
-Maintainer: Dario Griffo <dariogriffo@gmail.com>
+Maintainer: Fengnan Gao <gao.fengnan@gmail.com>
 Homepage: https://lnav.org
 Package: lnav
-Version: lnav_VERSION-BUILD_VERSION~griffo
+Version: lnav_VERSION-BUILD_VERSION~gaofn
 Architecture: SUPPORTED_ARCHITECTURES
 Depends: 
 Recommends: openssh-client
