@@ -1,0 +1,23 @@
+Source: lnav
+Section: utils
+Priority: optional
+Maintainer: Dario Griffo <dariogriffo@gmail.com>
+Homepage: https://lnav.org
+Package: lnav
+Version: lnav_VERSION-BUILD_VERSION~griffo
+Architecture: SUPPORTED_ARCHITECTURES
+Depends: 
+Recommends: openssh-client
+Suggests: wl-clipboard | xclip
+Description: log file navigator for the terminal
+ lnav merges log files from many sources into a single view ordered by
+ timestamp. It recognises common formats (syslog, journald, Apache and nginx
+ access logs, JSON lines and more) on its own, highlights errors and
+ warnings, follows files as they grow, opens compressed files and archives,
+ and lets you query the log messages with SQL. It can also open logs on a
+ remote host over ssh (lnav user@host:/var/log/syslog).
+ .
+ This package ships upstream's statically linked build, so it has no runtime
+ dependencies, plus the man page. Debug info is stripped; the symbol table is
+ kept for crash backtraces. openssh-client is recommended for remote logs,
+ and wl-clipboard or xclip lets lnav copy to the system clipboard.

@@ -1,0 +1,46 @@
+#!/usr/bin/make -f
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+LNAV_VERSION := $(shell dpkg-parsechangelog -S Version | sed 's/[-~].*//')
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+
+override_dh_auto_build:
+	@arch="$(DEB_HOST_ARCH)"; \
+	case "$$arch" in \
+		amd64)   LNAV_RELEASE="lnav-$(LNAV_VERSION)-linux-musl-x86_64" ;; \
+		arm64)   LNAV_RELEASE="lnav-$(LNAV_VERSION)-linux-musl-arm64" ;; \
+		*) echo "Unsupported architecture: $$arch"; exit 1 ;; \
+	esac; \
+	echo "Downloading $$LNAV_RELEASE for $(LNAV_VERSION)..."; \
+	wget -q "https://github.com/tstack/lnav/releases/download/v$(LNAV_VERSION)/$$LNAV_RELEASE.zip"; \
+	mkdir -p "$$LNAV_RELEASE"; \
+	unzip -q -j "$$LNAV_RELEASE.zip" -d "$$LNAV_RELEASE"; \
+	rm -f "$$LNAV_RELEASE.zip"; \
+	[ -f "$$LNAV_RELEASE/lnav" ] || { echo "Unexpected zip layout: $$LNAV_RELEASE/lnav not found"; exit 1; }; \
+	echo "$$LNAV_RELEASE" > .lnav_release_name
+
+override_dh_auto_install:
+	@LNAV_RELEASE=$$(cat .lnav_release_name); \
+	install -D -m 755 "$$LNAV_RELEASE/lnav" debian/lnav/usr/bin/lnav; \
+	install -D -m 644 "$$LNAV_RELEASE/lnav.1" debian/lnav/usr/share/man/man1/lnav.1
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+	@if [ -f .lnav_release_name ]; then \
+		LNAV_RELEASE=$$(cat .lnav_release_name); \
+		rm -rf "$$LNAV_RELEASE" .lnav_release_name || true; \
+	fi
+
+# Upstream's static binary carries full debug info. Drop it but keep the
+# symbol table for lnav's crash backtraces, as the Docker build does; no
+# dbgsym package, and dwz has nothing to do on a static binary.
+override_dh_dwz:
+
+override_dh_strip:
+	strip --strip-debug debian/lnav/usr/bin/lnav
+
+override_dh_shlibdeps:

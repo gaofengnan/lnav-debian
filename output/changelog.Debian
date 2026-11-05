@@ -1,0 +1,16 @@
+lnav (FULL_VERSION) stable; urgency=low
+
+  ## lnav v0.14.1
+
+  - New `:reload-view` command (F5) that re-runs whatever populated the
+    current view: the last SQL query in the DB view, the index in TIMELINE.
+  - The DB view shows the query that populated it, when it ran and how long
+    it took, and whether the results are on current or old log data.
+  - Kitty keyboard protocol support in the prompt (copy, select all, cut,
+    undo), keyboard resizing of the multi-line prompt and more
+    readline-style key bindings.
+  - The message details panel gains a `File:` row with the source file and
+    line; raw JSON log messages can be copied to the clipboard.
+
+  Older entries have been trimmed. The complete upstream changelog lives at
+  https://github.com/tstack/lnav/releases
